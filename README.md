@@ -1,9 +1,9 @@
 # Tuition Reimbursement Management System (TRMS)
 
-## TRMS Overview
+## 1. TRMS Overview
 The purpose of TRMS is to provide a system that encourages quality knowledge growth relevant to an individual’s expertise.   Currently, TRMS provides reimbursements for university courses, seminars, certification preparation classes, certifications, and technical training.  The current system relies solely on email communication, requiring manual lookups of available funds and is error-prone due to inbox clutter and incorrect routing of tasks.  Furthermore, there is no way to record and report on reimbursements awarded, and so the company has no way to identify highly-invested courses that could be developed to be offered in-house.
 
-### Business Rules
+### ⋅⋅1. Business Rules
 Each employee is allowed to claim up to $1000 in tuition reimbursement a year.  The amount available to an employee is reset on the new year.  Event types have different standard reimbursement coverage: University Courses 80%, Seminars 60%, Certification Preparation Classes 75%, Certification 100%, Technical Training 90%, Other 30%.  After a BenCo has approved a reimbursement, the reimbursement is pending until a passing grade or presentation over the event is provided.  The monetary amount available for an employee to reimburse is defined by the following equation: AvailableReimburstment = TotalReimburstment ($1000) – PendingReimburstments – AwardedReimburstments.  If the projected reimbursement for an event exceeds the available reimbursement amount, it is adjusted to the amount available.  Reimbursements do not cover course materials such as books.
 
 ## Complete the Tuition Reimbursement Form
