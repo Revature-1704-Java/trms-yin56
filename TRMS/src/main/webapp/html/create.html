@@ -3,7 +3,7 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Create</title>
-	<link rel="stylesheet" href="../css/index.css">
+	<link rel="stylesheet" href="../css/create.css">
 </head>
 <body>
 	<header>
@@ -11,13 +11,21 @@
 			<h1><span class="highlight">TRMS</span></h1>
 		</div>
 	</header>
-	<h2>Create</h2>
-	<form action="AccountServlet" method="GET">
-		fname = <input type="text" name="firstName"><br/>
-		lname = <input type="text" name="lastName"><br/>
-		email = <input type="text" name="email"><br/>
-		password = <input type="text" name="password"><br/>
-		<input type="submit" value="create">
-	</form>
+	
+	<div class="cform">
+		<h2>Create Account</h2>
+		<form action="AccountServlet" method="GET">
+			<label for="fname">First Name</label>
+			<input type="text" name="firstName"><br/>
+			<label for="lname">Last Name</label>
+			<input type="text" name="lastName"><br/>
+			<label for="email">Email</label>
+			<input type="text" name="email"><br/>
+			<label for="password">Password</label>
+			<input type="password" name="password"><br/>
+			
+			<input type="submit" value="Create Account">
+		</form>
+	</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.revature.model;
+package com.revature.model.beans;
 
 public class Employee {
 	private String firstName;
