@@ -3,6 +3,7 @@ package com.revature.model.beans;
 public class Employee {
 	private String firstName;
 	private String lastName;
+	private String username;
 	private String password;
 	private String email;
 	private int id;
@@ -10,6 +11,20 @@ public class Employee {
 	private int deptHead;
 	private double amount_used;
 	
+	
+	public Employee(String firstName, String lastName, String password, String username, String email) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.username = username;
+		this.email = email;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

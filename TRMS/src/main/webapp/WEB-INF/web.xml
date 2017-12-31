@@ -10,8 +10,8 @@
   
  
   <servlet>
-  	<servlet-name>AccountServlet</servlet-name>
-  	<servlet-class>com.revature.controllers.AccountServlet</servlet-class>
+  	<servlet-name>CreateServlet</servlet-name>
+  	<servlet-class>com.revature.controllers.CreateServlet</servlet-class>
   </servlet>
   <servlet>
   	<description>
@@ -23,8 +23,8 @@
   
   
   <servlet-mapping>
-  	<servlet-name>AccountServlet</servlet-name>
-  	<url-pattern>/AccountServlet</url-pattern>
+  	<servlet-name>CreateServlet</servlet-name>
+  	<url-pattern>/CreateServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>IndexServlet</servlet-name>
