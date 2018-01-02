@@ -21,11 +21,12 @@ public class EmployeeDAO {
 		try(Connection conn = ConnectionUtil.getConnection()){
 			System.out.println("Database connection successful");
 			
-			String p1 = "(firstName, lastName, PASSWORD, USERNAME, EMAIL)";
-			String p2 = "(" + e.getFirstName() + ", " + e.getLastName() + ", " + e.getPassword() + ", " + e.getUsername() + ", " + e.getEmail() + ")";
+			String p1 = "( FIRSTNAME, LASTNAME, PASSWD, USERNAME, EMAIL, AMOUNT_USED, EMPLOYEETYPEID)";
+			String p2 = "(\'" + e.getFirstName() + "' , '" + e.getLastName() + "', '" + e.getPassword() 
+				+ "', '" + e.getUsername() + "', '" + e.getEmail() + "', " + 1000 + ", " + 1 +")";
 			String sql = "INSERT INTO EMPLOYEE " + p1 + " VALUES " + p2;
 					
-			
+			System.out.println(sql);
 			ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
@@ -41,5 +42,44 @@ public class EmployeeDAO {
 			
 		}
 		return false;
+	}
+	
+	
+	public int checkEmployee(String username, String password) {
+		PreparedStatement ps = null;
+		
+		try(Connection conn = ConnectionUtil.getConnection()){
+			System.out.println("Database connection successful");
+			
+			String sql = "SELECT EMPLOYEEID, USERNAME, PASSWD FROM EMPLOYEE WHERE USERNAME = \'" 
+					+ username + "\' AND PASSWD=\'" + password + "\'";
+					
+			System.out.println(sql);
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			int rid = 0;
+			
+			if (rs.next()) {    
+			    rid = rs.getInt("EMPLOYEEID");
+				rs.close();
+				ps.close();
+			    return rid;
+			} 
+			else{
+				System.out.println("User does not exist. Please check your username or password"); 
+				rs.close();
+				ps.close();
+				return 0;
+				
+			}
+			//System.out.println("Closing");
+			
+			
+		} catch (Exception ex) {
+			ex.getMessage();
+			ex.printStackTrace();
+			
+		}
+		return 0;
 	}
 }
