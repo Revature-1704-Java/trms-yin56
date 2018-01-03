@@ -1,10 +1,23 @@
-function loadDoc() {
+function getName() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("demo").innerHTML = this.responseText;
+      document.getElementById("test").innerHTML = this.responseText;
     }
   };
-  xhttp.open("GET", "demo_get2.asp?fname=Henry&lname=Ford", true);
+  xhttp.open("GET", "ProfileServlet", true);
   xhttp.send();
+}
+
+function displayTable(){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("reimtble").innerHTML = this.responseText;
+	    }
+	};
+	xhttp.open("GET", "EmployeeTableServlet", true);
+	xhttp.send();
+	
+	
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>RequestReimbursement</title>
+</head>
+<body>
+	<header>
+		<div class="container">
+			<h1><span class="highlight">TRMS</span></h1>
+		</div>
+	</header>
+	
+	<div class="rform">
+		<h2>Enter Reimbursement Information</h2>
+		<form action="../RequestServlet" method="GET">
+			
+			<h2>Event Information</h2>
+			
+			<label for="descript">Event Description</label>
+			<input type="text" name="descript"><br/>
+			
+			<label for="location">Location</label>
+			<input type="text" name="location"><br/>
+			
+			<label for="eventtype">Event Type</label>
+			<select name="eventtype">
+			    <option value="1">University Courses</option>
+			    <option value="2">Seminars</option>
+			    <option value="3">Certification Preparation</option>
+			    <option value="4">Certification</option>
+			    <option value="5">Technical Training</option>
+			    <option value="6">Other</option>
+  			</select><br/>
+  			
+  			<label for="gradetype">Grading Format</label>
+			<select name="gradetype">
+			    <option value="1">Letter Grade</option>
+			    <option value="2">Pass or Fail</option>
+			    
+  			</select><br/>
+  			
+  			<label for="cost">Cost</label>
+			<input type="number" name="cost"><br/>
+			
+  			<label for="startday">Starting Date</label>
+  			<input type="date" name="startday"><br/>
+  			
+  			<label for="time">Time</label>
+			<input type="text" name="time"><br/>
+			
+			<label for="just">Justification</label><br/>
+			<textarea name="just" rows="10" cols="50">Enter Justification</textarea><br/>
+  			
+  			
+			<input type="submit" value="Request Reimbursement">
+		</form>
+	</div>
+</body>
+</html>
