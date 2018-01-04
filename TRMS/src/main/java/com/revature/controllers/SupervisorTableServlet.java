@@ -71,12 +71,15 @@ public class SupervisorTableServlet extends HttpServlet {
 			out.write("	</tr>");
 			for(int i = 0; i < rlist.size(); i++ ) {
 				r = rlist.get(i);
+				String ds = returnApprovalString(r.getSuperApproved());
+				String dh = returnApprovalString(r.getDeptApproved());
+				String bc = returnApprovalString(r.getBencoApproved());
 				out.write("	<tr>");
 				out.write("		<td>" + r.getRID() +"</td>");
 				out.write("		<td>" + r.getEvt_description() +"</td>");
-				out.write("		<td>" + r.getSuperApproved() +"</td>");
-				out.write("		<td>" + r.getDeptApproved() +"</td>");
-				out.write("		<td>" + r.getBencoApproved() +"</td>");
+				out.write("		<td>" + ds +"</td>");
+				out.write("		<td>" + dh +"</td>");
+				out.write("		<td>" + bc +"</td>");
 				out.write("		<td>"
 						+ "<form action=\"./ApprovalServlet\" method=\"get\">"
 						+ "<button type=\"submit\"  name=\"approve\" value=\"" + r.getRID() + "\"/>"
@@ -97,6 +100,20 @@ public class SupervisorTableServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
+	}
+	
+	protected String returnApprovalString(int type) {
+		if(type == 1) {
+			return "Pending";
+		}
+		else if(type == 2) {
+			return "Denied";
+		}
+		else if(type == 3) {
+			return "Approved";
+		}
+		
+		return "";
 	}
 
 }

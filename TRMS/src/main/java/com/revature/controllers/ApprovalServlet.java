@@ -34,6 +34,8 @@ private static final long serialVersionUID = 1L;
 		
 		ReimbursementDAO dao2 = new ReimbursementDAO();
 		if(dao2.updateReimbursement(3, Integer.parseInt(rid), type)) {
+			
+			
 			response.sendRedirect("./WelcomeServlet");
 		}
 		

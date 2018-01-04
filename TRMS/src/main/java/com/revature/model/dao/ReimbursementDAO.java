@@ -46,7 +46,7 @@ public class ReimbursementDAO {
 	}
 	
 	
-	public List<Reimbursement> getAllReimbursement(int eid) {
+	public List<Reimbursement> getPendingReimbursement(int eid) {
 		PreparedStatement ps = null;
 		Reimbursement re = null;
 		List<Reimbursement> rlist = new ArrayList<>();
@@ -63,13 +63,16 @@ public class ReimbursementDAO {
 			
 			while(rs.next()) {    
 			    int rid = rs.getInt("RID");
-			    String descript = rs.getString("DESCRIPT");
-			    int dsApr = rs.getInt("SUPER_APR");
-			    int dhApr = rs.getInt("DEPT_ARR");
-			    int bencoApr = rs.getInt("BENCO_APR");
-			    
-			    re = new Reimbursement(rid, descript, dsApr, dhApr, bencoApr);
-			    rlist.add(re);
+			    if(checkAllApproved(rid)  == false) {
+					String descript = rs.getString("DESCRIPT");
+				    int dsApr = rs.getInt("SUPER_APR");
+				    int dhApr = rs.getInt("DEPT_ARR");
+				    int bencoApr = rs.getInt("BENCO_APR");
+				    double cost = rs.getDouble("COST_AMT");
+				    re = new Reimbursement(rid, descript, dsApr, dhApr, bencoApr, cost);
+				    rlist.add(re);
+				}
+			   
 			    
 				
 			} 
@@ -88,6 +91,52 @@ public class ReimbursementDAO {
 	}
 	
 	
+	public List<Reimbursement> getApprovedReimbursement(int eid) {
+		PreparedStatement ps = null;
+		Reimbursement re = null;
+		List<Reimbursement> rlist = new ArrayList<>();
+		try(Connection conn = ConnectionUtil.getConnection()){
+			System.out.println("Database connection successful");
+			
+			String sql = "SELECT * FROM REIMBURSEMENT WHERE EMPLOYEEID =" + eid; 
+		
+					
+			System.out.println(sql);
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			
+			while(rs.next()) {    
+			    int rid = rs.getInt("RID");
+			    if(checkAllApproved(rid)  == true) {
+					String descript = rs.getString("DESCRIPT");
+				    int dsApr = rs.getInt("SUPER_APR");
+				    int dhApr = rs.getInt("DEPT_ARR");
+				    int bencoApr = rs.getInt("BENCO_APR");
+				    double cost = rs.getDouble("COST_AMT");
+				    re = new Reimbursement(rid, descript, dsApr, dhApr, bencoApr, cost);
+				    rlist.add(re);
+				}
+			   
+			    
+				
+			} 
+			rs.close();
+			ps.close();
+		    return rlist;
+			//System.out.println("Closing");
+			
+			
+		} catch (Exception ex) {
+			ex.getMessage();
+			ex.printStackTrace();
+			
+		}
+		return null;
+	}
+	
+	
+	//for managers(employeetype 2, 3, 4)
 	public List<Reimbursement> getAllPendingReimbursement(int eid, int type) {
 		PreparedStatement ps = null;
 		Reimbursement re = null;
@@ -130,12 +179,17 @@ public class ReimbursementDAO {
 				rs = ps.executeQuery();
 				while(rs.next()) {
 					int rid = rs.getInt("RID");
-				    String descript = rs.getString("DESCRIPT");
-				    int dsApr = rs.getInt("SUPER_APR");
-				    int dhApr = rs.getInt("DEPT_ARR");
-				    int bencoApr = rs.getInt("BENCO_APR");
-				    re = new Reimbursement(rid, descript, dsApr, dhApr, bencoApr);
-				    rlist.add(re);
+					
+					if(checkAllApproved(rid)  == false) {
+						String descript = rs.getString("DESCRIPT");
+					    int dsApr = rs.getInt("SUPER_APR");
+					    int dhApr = rs.getInt("DEPT_ARR");
+					    int bencoApr = rs.getInt("BENCO_APR");
+					    double cost = rs.getDouble("COST_AMT");
+					    re = new Reimbursement(rid, descript, dsApr, dhApr, bencoApr, cost);
+					    rlist.add(re);
+					}
+				    
 				}
 			}
 			
@@ -153,6 +207,9 @@ public class ReimbursementDAO {
 		}
 		return null;
 	}
+	
+	
+	
 	
 	//0 pending, 2 denied, 3 approved
 	public boolean updateReimbursement(int status, int rid, int type) {
@@ -182,5 +239,37 @@ public class ReimbursementDAO {
 			
 		}
 		return false;
+	}
+	
+	
+	public boolean checkAllApproved(int rid) {
+		PreparedStatement ps = null;
+		try(Connection conn = ConnectionUtil.getConnection()){
+		
+				
+			String sql = "SELECT SUPER_APR, DEPT_ARR, BENCO_APR FROM REIMBURSEMENT WHERE RID = " + rid;
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				int s = rs.getInt("SUPER_APR");
+				int d = rs.getInt("DEPT_ARR");
+				int b = rs.getInt("BENCO_APR");
+				if(s == 3 && d == 3 && b == 3) {
+					rs.close();
+					ps.close();
+					return true;
+				}
+			}
+			rs.close();
+			ps.close();
+			return false;
+			
+		} catch (Exception ex) {
+			ex.getMessage();
+			ex.printStackTrace();
+			
+		}
+		return false;
+	
 	}
 }

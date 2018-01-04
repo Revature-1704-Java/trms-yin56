@@ -33,12 +33,13 @@ public class Reimbursement {
 		this.reason = reason;
 		this.gf_id = gf_id;
 	}
-	public Reimbursement(int rid, String evt_description, int superApproved, int deptApproved, int bencoApproved) {
+	public Reimbursement(int rid, String evt_description, int superApproved, int deptApproved, int bencoApproved, double cost) {
 		this.RID = rid;
 		this.evt_description = evt_description;
 		this.superApproved = superApproved;
 		this.deptApproved = deptApproved;
 		this.bencoApproved = bencoApproved;
+		this.cost = cost;
 		
 	}
 	public void setCost(double cost) {
