@@ -46,14 +46,15 @@ public class ReimbursementDAO {
 	}
 	
 	
-	public List<Reimbursement> getReimbursement(int eid) {
+	public List<Reimbursement> getAllReimbursement(int eid) {
 		PreparedStatement ps = null;
-		
+		Reimbursement re = null;
+		List<Reimbursement> rlist = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()){
 			System.out.println("Database connection successful");
 			
-			String sql = "SELECT * FROM REIMBURSEMENT WHERE EMPLOYEEID =" 
-					+ eid;
+			String sql = "SELECT * FROM REIMBURSEMENT WHERE EMPLOYEEID =" + eid; 
+		
 					
 			System.out.println(sql);
 			ps = conn.prepareStatement(sql);
@@ -61,13 +62,20 @@ public class ReimbursementDAO {
 			
 			
 			while(rs.next()) {    
-			    int ed = rs.getInt("EMPLOYEEID");
 			    int rid = rs.getInt("RID");
+			    String descript = rs.getString("DESCRIPT");
+			    int dsApr = rs.getInt("SUPER_APR");
+			    int dhApr = rs.getInt("DEPT_ARR");
+			    int bencoApr = rs.getInt("BENCO_APR");
 			    
-				rs.close();
-				ps.close();
-			    return null;
+			    re = new Reimbursement(rid, descript, dsApr, dhApr, bencoApr);
+			    rlist.add(re);
+			    
+				
 			} 
+			rs.close();
+			ps.close();
+		    return rlist;
 			//System.out.println("Closing");
 			
 			
@@ -77,5 +85,102 @@ public class ReimbursementDAO {
 			
 		}
 		return null;
+	}
+	
+	
+	public List<Reimbursement> getAllPendingReimbursement(int eid, int type) {
+		PreparedStatement ps = null;
+		Reimbursement re = null;
+		List<Reimbursement> rlist = new ArrayList<>();
+		try(Connection conn = ConnectionUtil.getConnection()){
+			System.out.println("Database connection successful");
+			
+			//first get employees where their manager type is the given
+			String mantype = "";
+			if(type == 2) {
+				mantype = "SUPERVISOR";
+			}
+			else if(type ==3) {
+				mantype = "DEPT_HEAD";
+			}
+			else if(type  == 4) {
+				mantype = "BENCO";
+			}
+			String sql1 = "SELECT EMPLOYEEID FROM EMPLOYEE WHERE " + mantype + " = " + eid;
+			ps = conn.prepareStatement(sql1);
+			ResultSet rs = ps.executeQuery();
+			
+			//put all the ids into a list, will use this for the next query
+			List<Integer> elist = new ArrayList<>();
+			int neweid;
+			while(rs.next()) {
+				neweid = rs.getInt("EMPLOYEEID");
+				elist.add(neweid);
+			}
+			
+			//if none return empty list
+			if(elist.size() == 0) {
+				return rlist;
+			}
+			
+			
+			for(int i = 0; i < elist.size(); i++) {
+				String sql = "SELECT * FROM REIMBURSEMENT WHERE EMPLOYEEID = " + elist.get(i);
+				ps = conn.prepareStatement(sql);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					int rid = rs.getInt("RID");
+				    String descript = rs.getString("DESCRIPT");
+				    int dsApr = rs.getInt("SUPER_APR");
+				    int dhApr = rs.getInt("DEPT_ARR");
+				    int bencoApr = rs.getInt("BENCO_APR");
+				    re = new Reimbursement(rid, descript, dsApr, dhApr, bencoApr);
+				    rlist.add(re);
+				}
+			}
+			
+		
+			rs.close();
+			ps.close();
+		    return rlist;
+			//System.out.println("Closing");
+			
+			
+		} catch (Exception ex) {
+			ex.getMessage();
+			ex.printStackTrace();
+			
+		}
+		return null;
+	}
+	
+	//0 pending, 2 denied, 3 approved
+	public boolean updateReimbursement(int status, int rid, int type) {
+		PreparedStatement ps = null;
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String t = "";
+			if(type == 2) {
+				t = "SUPER_APR";	
+			}
+			else if(type == 3) {
+				t = "DEPT_ARR";
+			}
+			else if (type == 4) {
+				t = "BENCO_APR";
+			}
+			
+			String sql = "UPDATE REIMBURSEMENT SET " + t + " = " + status + " WHERE RID = " + rid;
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			rs.close();
+			ps.close();
+			return true;
+			
+		} catch (Exception ex) {
+			ex.getMessage();
+			ex.printStackTrace();
+			
+		}
+		return false;
 	}
 }

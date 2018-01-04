@@ -3,25 +3,23 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Welcome</title>
-	<script type="text/javascript" src="js/getName.js"></script>  
+	<script type="text/javascript" src="js/getName.js"></script> 
+	<link rel="stylesheet" href="css/welcome.css">
 </head>
 
 
-<body onload='getName()'>
+<body onload='getName(); displayTable(); displayApproveTable();'>
 	<header>
 		<div class="container">
 			<h1><span class="highlight">TRMS</span></h1>
 		</div>
+		<a href="LogoutServlet">Logout</a>
 	</header>
 	<div id="test"></div>
 	<h3>What would you like to do today?</h3>
 	<div id="options">
-		<div id="pendingRid">
-			<h3>View Pending Reimbursements</h3>
-			<form action="./html/create.html">
-				    <button type="submit" class="btn_1">View</button>
-			</form>	
-		</div>
+		<div id="reimtble"></div><br/>
+		<div id="ptble"></div>
 		<div id="addRid">
 			<h3>Request a Reimbursement</h3>
 			<form action="./html/request.html">

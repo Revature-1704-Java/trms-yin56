@@ -1,53 +1,45 @@
 package com.revature.controllers;
 
-
-import com.revature.model.dao.EmployeeDAO;
-import com.revature.model.beans.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.revature.model.beans.Reimbursement;
+import com.revature.model.dao.EmployeeDAO;
+import com.revature.model.dao.ReimbursementDAO;
 
 
-public class CreateServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-	/*
-    public AccountServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-	*/
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+@WebServlet("/ApprovalServlet")
+public class ApprovalServlet  extends HttpServlet{
+private static final long serialVersionUID = 1L;
+    
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		String fname = request.getParameter("firstName");
-		String lname = request.getParameter("lastName");
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		String username = request.getParameter("username");
-		String employeetype = request.getParameter("employeetype");
 		
+		HttpSession session = request.getSession(false);
+		//session.setAttribute(arg0, arg1);
+		int eid = (int)session.getAttribute("id");
+		String rid = request.getParameter("approve");
 		
 		EmployeeDAO dao = new EmployeeDAO();
-		Employee e = new Employee(fname, lname, password, username, email, Integer.parseInt(employeetype));
-		PrintWriter out = response.getWriter();
-		if(dao.addEmployee(e) == true) {
-			out.println("<p>Your account has been sucessfully created<p>");
+		int type = dao.getEmployeeType(eid);
+		
+		ReimbursementDAO dao2 = new ReimbursementDAO();
+		if(dao2.updateReimbursement(3, Integer.parseInt(rid), type)) {
+			response.sendRedirect("./WelcomeServlet");
 		}
-		else {
-			out.println("<p>Something went wrong. :(<p>");
-		}
-		out.close();
+		
+		
+		
+		
 		
 		
 		/*
@@ -68,5 +60,4 @@ public class CreateServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 	}
-
 }

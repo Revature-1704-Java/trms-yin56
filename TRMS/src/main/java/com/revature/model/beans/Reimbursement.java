@@ -33,6 +33,14 @@ public class Reimbursement {
 		this.reason = reason;
 		this.gf_id = gf_id;
 	}
+	public Reimbursement(int rid, String evt_description, int superApproved, int deptApproved, int bencoApproved) {
+		this.RID = rid;
+		this.evt_description = evt_description;
+		this.superApproved = superApproved;
+		this.deptApproved = deptApproved;
+		this.bencoApproved = bencoApproved;
+		
+	}
 	public void setCost(double cost) {
 		this.cost = cost;
 	}

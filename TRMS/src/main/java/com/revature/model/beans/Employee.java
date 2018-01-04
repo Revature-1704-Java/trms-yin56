@@ -10,14 +10,16 @@ public class Employee {
 	private int supervisor;
 	private int deptHead;
 	private double amount_used;
+	private int employeetypeId;
 	
 	
-	public Employee(String firstName, String lastName, String password, String username, String email) {
+	public Employee(String firstName, String lastName, String password, String username, String email, int employeetype) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
 		this.username = username;
 		this.email = email;
+		this.employeetypeId = employeetype;
 	}
 	public String getUsername() {
 		return username;
@@ -72,6 +74,12 @@ public class Employee {
 	}
 	public void setAmount_used(double amount_used) {
 		this.amount_used = amount_used;
+	}
+	public int getEmployeetypeId() {
+		return employeetypeId;
+	}
+	public void setEmployeetypeId(int employeetypeId) {
+		this.employeetypeId = employeetypeId;
 	}
 	
 	

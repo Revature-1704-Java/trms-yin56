@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/EmployeeTableServlet")
-public class EmployeeTableServlet extends HttpServlet {
+@WebServlet("/SupervisorTableServlet")
+public class SupervisorTableServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -35,11 +35,22 @@ public class EmployeeTableServlet extends HttpServlet {
 		System.out.println("In Profile Servlet");
 		HttpSession session = request.getSession(false);
 		
-		int eid = (int)session.getAttribute("id");		
-		ReimbursementDAO dao = new ReimbursementDAO();
+		int eid = (int)session.getAttribute("id");
 
-		List<Reimbursement> rlist = dao.getAllReimbursement(eid);
+		EmployeeDAO edao = new EmployeeDAO();
 		PrintWriter out = response.getWriter();
+		int type = edao.getEmployeeType(eid);
+		if(type < 2) {
+			//if type is less than 2 dont print anything
+			out.write("");
+			return;
+		}
+		
+		//Get Reimbursements that this employee can approve
+		ReimbursementDAO dao = new ReimbursementDAO();
+		
+		List<Reimbursement> rlist = dao.getAllPendingReimbursement(eid, type);
+		
 		response.setContentType("text/html");
 		if(rlist == null) {
 			out.write("<p> Something went wrong </p>");
@@ -66,6 +77,10 @@ public class EmployeeTableServlet extends HttpServlet {
 				out.write("		<td>" + r.getSuperApproved() +"</td>");
 				out.write("		<td>" + r.getDeptApproved() +"</td>");
 				out.write("		<td>" + r.getBencoApproved() +"</td>");
+				out.write("		<td>"
+						+ "<form action=\"./ApprovalServlet\" method=\"get\">"
+						+ "<button type=\"submit\"  name=\"approve\" value=\"" + r.getRID() + "\"/>"
+								+ "APPROVE</button></form></td>");
 				out.write("	</tr>");
 				
 			}

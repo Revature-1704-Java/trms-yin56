@@ -23,7 +23,7 @@ public class EmployeeDAO {
 			
 			String p1 = "( FIRSTNAME, LASTNAME, PASSWD, USERNAME, EMAIL, AMOUNT_USED, EMPLOYEETYPEID)";
 			String p2 = "(\'" + e.getFirstName() + "' , '" + e.getLastName() + "', '" + e.getPassword() 
-				+ "', '" + e.getUsername() + "', '" + e.getEmail() + "', " + 1000 + ", " + 1 +")";
+				+ "', '" + e.getUsername() + "', '" + e.getEmail() + "', " + 1000 + ", " + e.getEmployeetypeId() +")";
 			String sql = "INSERT INTO EMPLOYEE " + p1 + " VALUES " + p2;
 					
 			System.out.println(sql);
@@ -76,6 +76,34 @@ public class EmployeeDAO {
 			
 			
 		} catch (Exception ex) {
+			ex.getMessage();
+			ex.printStackTrace();
+			
+		}
+		return 0;
+	}
+	
+	
+	public int getEmployeeType(int eid) {
+		PreparedStatement ps = null;
+		
+		try(Connection conn = ConnectionUtil.getConnection()){
+			System.out.println("Database connection successful");
+			
+			String sql = "SELECT EMPLOYEETYPEID FROM EMPLOYEE WHERE EMPLOYEEID = " + eid; 
+					
+			System.out.println(sql);
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			int typeid = 0;
+			if (rs.next()) {    
+			    typeid = rs.getInt("EMPLOYEETYPEID");
+				rs.close();
+				ps.close();
+			    return typeid;
+			} 
+			return 0;
+		}catch (Exception ex) {
 			ex.getMessage();
 			ex.printStackTrace();
 			
