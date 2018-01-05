@@ -21,9 +21,10 @@ public class EmployeeDAO {
 		try(Connection conn = ConnectionUtil.getConnection()){
 			System.out.println("Database connection successful");
 			
-			String p1 = "( FIRSTNAME, LASTNAME, PASSWD, USERNAME, EMAIL, AMOUNT_USED, EMPLOYEETYPEID)";
+			String p1 = "( FIRSTNAME, LASTNAME, PASSWD, USERNAME, EMAIL, SUPERVISOR, DEPT_HEAD, BENCO, AMOUNT_USED, EMPLOYEETYPEID)";
+			String p3 = "' , " +  3 + ", " + 2 + ", " + 1;
 			String p2 = "(\'" + e.getFirstName() + "' , '" + e.getLastName() + "', '" + e.getPassword() 
-				+ "', '" + e.getUsername() + "', '" + e.getEmail() + "', " + 1000 + ", " + e.getEmployeetypeId() +")";
+				+ "', '" + e.getUsername() + "', '" + e.getEmail() +  p3 + ", " + 1000 + ", " + e.getEmployeetypeId() +")";
 			String sql = "INSERT INTO EMPLOYEE " + p1 + " VALUES " + p2;
 					
 			System.out.println(sql);

@@ -50,6 +50,7 @@ public class EmployeeTableServlet extends HttpServlet {
 		else {
 			//loop through list and print all reimbursemtns in a table
 			Reimbursement r = null;
+			out.write("<h4>Pending Reimbursements</h4>");
 			out.write("<table>");
 			out.write("	<tr>");
 			out.write("		<th>ID</th>");
