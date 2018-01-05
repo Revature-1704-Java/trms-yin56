@@ -1,4 +1,12 @@
 //get the name of the current employee
+
+function displayPage(){
+	getName();
+	displayTable();
+	getApprovedTable();
+	displayApproveTable();
+}
+
 function getName() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -51,3 +59,4 @@ function displayApproveTable(){
 	
 	
 }
+

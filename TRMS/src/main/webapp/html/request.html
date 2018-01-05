@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>RequestReimbursement</title>
+	<title>RequestReimbursement</title>
+	<link rel="stylesheet" href="../css/create.css">
 </head>
 <body>
 	<header>
@@ -11,17 +12,15 @@
 		</div>
 	</header>
 	
-	<div class="rform">
+	<div class="cform">
 		<h2>Enter Reimbursement Information</h2>
 		<form action="../RequestServlet" method="GET">
 			
-			<h2>Event Information</h2>
-			
 			<label for="descript">Event Description</label>
-			<input type="text" name="descript"><br/>
+			<input type="text" name="descript"><br/><br/>
 			
 			<label for="location">Location</label>
-			<input type="text" name="location"><br/>
+			<input type="text" name="location"><br/><br/>
 			
 			<label for="eventtype">Event Type</label>
 			<select name="eventtype">
@@ -31,26 +30,25 @@
 			    <option value="4">Certification</option>
 			    <option value="5">Technical Training</option>
 			    <option value="6">Other</option>
-  			</select><br/>
+  			</select><br/><br/>
   			
   			<label for="gradetype">Grading Format</label>
 			<select name="gradetype">
 			    <option value="1">Letter Grade</option>
-			    <option value="2">Pass or Fail</option>
-			    
-  			</select><br/>
+			    <option value="2">Pass or Fail</option>    
+  			</select><br/><br/>
   			
   			<label for="cost">Cost</label>
-			<input type="number" name="cost"><br/>
+			<input type="number" name="cost"><br/><br/>
 			
   			<label for="startday">Starting Date</label>
-  			<input type="date" name="startday"><br/>
+  			<input type="date" name="startday"><br/><br/>
   			
   			<label for="time">Time</label>
-			<input type="text" name="time"><br/>
+			<input type="text" name="time"><br/><br/>
 			
 			<label for="just">Justification</label><br/>
-			<textarea name="just" rows="10" cols="50">Enter Justification</textarea><br/>
+			<textarea name="just" rows="10" cols="50">Enter Justification</textarea><br/><br/>
   			
   			
 			<input type="submit" value="Request Reimbursement">

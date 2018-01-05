@@ -272,4 +272,65 @@ public class ReimbursementDAO {
 		return false;
 	
 	}
+	
+	public double getCost(int rid) {
+		PreparedStatement ps = null;
+		
+		try(Connection conn = ConnectionUtil.getConnection()){
+			System.out.println("Database connection successful");
+			
+			String sql = "SELECT COST_AMT FROM REIMBURSEMENT WHERE RID = " + rid; 
+					
+			System.out.println(sql);
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {    
+			    
+			    double cost = rs.getDouble("COST_AMT");
+				rs.close();
+				ps.close();
+			    return cost;
+			} 
+			rs.close();
+			ps.close();
+			return -1;
+		}catch (Exception ex) {
+			ex.getMessage();
+			ex.printStackTrace();
+			
+		}
+		return -1;
+	}
+	
+	public int getEmployeeWithRID(int rid) {
+		PreparedStatement ps = null;
+		
+		try(Connection conn = ConnectionUtil.getConnection()){
+			System.out.println("Database connection successful");
+			
+			String sql = "SELECT EMPLOYEEID FROM REIMBURSEMENT WHERE RID = " + rid; 
+					
+			System.out.println(sql);
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {    
+			    
+			    int eid = rs.getInt("EMPLOYEEID");
+				rs.close();
+				ps.close();
+			    return eid;
+			} 
+			rs.close();
+			ps.close();
+			return -1;
+		}catch (Exception ex) {
+			ex.getMessage();
+			ex.printStackTrace();
+			
+		}
+		return -1;
+		
+	}
 }

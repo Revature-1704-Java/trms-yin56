@@ -33,7 +33,20 @@ private static final long serialVersionUID = 1L;
 		int type = dao.getEmployeeType(eid);
 		
 		ReimbursementDAO dao2 = new ReimbursementDAO();
+		System.out.println("approving");
 		if(dao2.updateReimbursement(3, Integer.parseInt(rid), type)) {
+			//if all 3 has been approved, then subtract from available
+			System.out.println("updating left");
+			if(dao2.checkAllApproved(Integer.parseInt(rid))) {
+				System.out.println("updating left cost");
+				int e = dao2.getEmployeeWithRID(Integer.parseInt(rid));
+				double left = dao.getCost(e);
+				double cost = dao2.getCost(Integer.parseInt(rid));
+				double res = left - cost;
+				dao.updateAmtLeft(e, res);
+				
+			}
+			
 			
 			
 			response.sendRedirect("./WelcomeServlet");

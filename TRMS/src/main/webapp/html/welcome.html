@@ -8,26 +8,50 @@
 </head>
 
 
-<body onload='getName(); displayTable(); displayApproveTable(); getApprovedTable();'>
+<body onload='displayPage();'>
+	<ul>
+		<li style="float:right"><a href="LogoutServlet">Logout</a></li>
+	</ul>
 	<header>
 		<div class="container">
 			<h1><span class="highlight">TRMS</span></h1>
+			
 		</div>
-		<a href="LogoutServlet">Logout</a>
+		
+		
 	</header>
-	<div id="test"></div>
-	<h3>What would you like to do today?</h3>
-	<div id="options">
-		<div id="reimtble"></div><br/>
-		<div id="ptble"></div>
-		<div id="aprtble"></div>
-		<div id="addRid">
-			<h3>Request a Reimbursement</h3>
-			<form action="./html/request.html">
-				    <button type="submit" class="btn_1">Request</button>
-			</form>	
+	<section id="greeting">
+		<div class="container">
+			<div id="test"></div>
 		</div>
-	</div>
+	</section>	
+	
+	<h3>Dashboard</h3>
+	<section id="options">
+		<div id="option">
+			<h4>Your Pending Reimbursement</h4>
+			<div id="reimtble"></div><br/>
+		</div>
+		<div id="option">
+			<h4>Pending Reimbursements</h4>
+			<div id="ptble"></div>
+		</div>
+		<div id="option">
+			<h4>Approved Reimbursements</h4>
+			<div id="aprtble"></div>
+		</div>
+		<div id="option">
+			<div id="addRid">
+				<h3>Request a Reimbursement</h3>
+				<form action="./html/request.html">
+					    <button type="submit" class="btn_1">Request</button>
+				</form>	
+			</div>
+		</div>
+		
+		
+		
+	</section>
 	
 </body>
 

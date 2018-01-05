@@ -29,9 +29,13 @@ public class ProfileServlet extends HttpServlet {
 		System.out.println("In Profile Servlet");
 		HttpSession session = request.getSession(false);
 		
+		int eid = (Integer) session.getAttribute("id");
 		String username = (String) session.getAttribute("user");
+		EmployeeDAO edao = new EmployeeDAO();
+		Double cost = edao.getCost(eid);
 		response.setContentType("text/html");
-		response.getWriter().write("<h1>Welcome, " + username.toUpperCase() + "</h1>");
+		response.getWriter().write("<h1>Welcome, " + username + "</h1>");
+		response.getWriter().write("<h2> Your balance is $" + cost);
 	
 	}
 

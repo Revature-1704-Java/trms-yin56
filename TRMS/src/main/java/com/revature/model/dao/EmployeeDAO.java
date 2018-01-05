@@ -111,5 +111,60 @@ public class EmployeeDAO {
 		return 0;
 	}
 	
+	//get cost, first and last name, 
+	public double getCost(int eid) {
+		PreparedStatement ps = null;
+		
+		try(Connection conn = ConnectionUtil.getConnection()){
+			System.out.println("Database connection successful");
+			
+			String sql = "SELECT AMOUNT_USED FROM EMPLOYEE WHERE EMPLOYEEID = " + eid; 
+					
+			System.out.println(sql);
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {    
+			    
+			    double cost = rs.getDouble("AMOUNT_USED");
+				rs.close();
+				ps.close();
+			    return cost;
+			} 
+			rs.close();
+			ps.close();
+			return -1;
+		}catch (Exception ex) {
+			ex.getMessage();
+			ex.printStackTrace();
+			
+		}
+		return -1;
+	}
+	
+	
+	public boolean updateAmtLeft(int eid, double cost) {
+		PreparedStatement ps = null;
+		
+		try(Connection conn = ConnectionUtil.getConnection()){
+			System.out.println("Database connection successful");
+			
+			String sql = "UPDATE EMPLOYEE SET AMOUNT_USED = " +  cost + " WHERE EMPLOYEEID =" + eid; 
+					
+			System.out.println(sql);
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			rs.close();
+			ps.close();
+			return true;
+		}catch (Exception ex) {
+			ex.getMessage();
+			ex.printStackTrace();
+			
+		}
+		return false;
+	}
+	
 
 }

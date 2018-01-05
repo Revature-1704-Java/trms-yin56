@@ -3,7 +3,7 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Login</title>
-	<link rel="stylesheet" href="../css/index.css">
+	<link rel="stylesheet" href="../css/create.css">
 </head>
 <body>
 	<header>
@@ -11,11 +11,13 @@
 			<h1><span class="highlight">TRMS</span></h1>
 		</div>
 	</header>
-	<div class="loginform">
+	<div class="cform">
 		<h2>Login</h2>
 		<form action="../LoginServlet" method="GET">
+			<label for="username">Username</label>
 			<input type="text" name="username"><br/>
-			<input type="text" name="password"><br/>
+			<label for="password">Password</label>
+			<input type="password" name="password"><br/>
 			<input type="submit" value="Login">
 		</form>
 	</div>

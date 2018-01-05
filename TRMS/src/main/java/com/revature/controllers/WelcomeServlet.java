@@ -21,11 +21,15 @@ public class WelcomeServlet extends HttpServlet{
 		HttpSession session = request.getSession(true);
 		
 		String username = (String) session.getAttribute("user");
+		int id = (Integer) session.getAttribute("id");
 	    if (username == null) {
 	      response.sendRedirect("index.html");
 	    }
 	    
-	    session.setAttribute("name", username);
+	    EmployeeDAO edao = new EmployeeDAO();
+	    
+	    
+	    
 	    //response.getWriter().append(username);
 	    request.getRequestDispatcher("./html/welcome.html").include(request, response);
 		
